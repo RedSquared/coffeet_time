@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coffee Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero">
+        <p class="eyebrow">Coffee Web Page</p>
+        <h1>Build your brew recipe around the cup you want.</h1>
+        <p class="hero-copy">
+          Start with a method, plug in any two values, and let the page fill in
+          the rest. This first shell is focused on 4:6 pourover, with room to
+          grow into other brew styles.
+        </p>
+      </section>
+
+      <section class="workspace">
+        <div class="panel control-panel">
+          <div class="panel-heading">
+            <h2>Brew Setup</h2>
+            <p>Choose a brew method and provide any 2 of the 3 values below.</p>
+          </div>
+
+          <form id="brew-form" class="brew-form">
+            <label class="field">
+              <span>Brewing method</span>
+              <select id="brew-method" name="brew-method">
+                <option value="">None / Freestyle</option>
+                <option value="four-six">4:6 Method</option>
+                <option value="general-pourover">General Pourover</option>
+              </select>
+            </label>
+
+            <div class="field-grid">
+              <label class="field">
+                <span>Water (g)</span>
+                <input
+                  id="water"
+                  name="water"
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  placeholder="300"
+                />
+              </label>
+
+              <label class="field">
+                <span>Coffee (g)</span>
+                <input
+                  id="coffee"
+                  name="coffee"
+                  type="number"
+                  min="0"
+                  step="0.1"
+                  placeholder="20"
+                />
+              </label>
+
+              <label class="field">
+                <span>Ratio</span>
+                <input
+                  id="ratio"
+                  name="ratio"
+                  type="number"
+                  min="1"
+                  step="0.1"
+                  placeholder="15"
+                />
+              </label>
+            </div>
+
+            <div id="four-six-controls" class="method-controls">
+              <div class="field-grid">
+                <label class="field">
+                  <span>Bloom profile</span>
+                  <select id="bloom-profile" name="bloom-profile">
+                    <option value="balanced">Balanced</option>
+                    <option value="sweet">Sweet</option>
+                    <option value="bright">Bright</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Body profile</span>
+                  <select id="body-profile" name="body-profile">
+                    <option value="medium">Med Body</option>
+                    <option value="light">Light Body</option>
+                    <option value="full">Full Body</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div id="general-controls" class="method-controls" hidden>
+              <div class="field-grid general-grid">
+                <label class="field">
+                  <span>Bloom multiplier</span>
+                  <input
+                    id="bloom-multiplier"
+                    name="bloom-multiplier"
+                    type="number"
+                    min="0.1"
+                    step="0.1"
+                    placeholder="3"
+                    value="3"
+                  />
+                </label>
+
+                <label class="field">
+                  <span>Total pours</span>
+                  <input
+                    id="pour-count"
+                    name="pour-count"
+                    type="number"
+                    min="1"
+                    step="1"
+                    placeholder="4"
+                    value="4"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div class="action-row">
+              <button type="button" class="button-secondary" id="reset-button">
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel results-panel">
+          <div class="panel-heading">
+            <h2>Recipe Output</h2>
+            <p id="result-summary">
+              Enter any two values to generate a starting recipe.
+            </p>
+          </div>
+
+          <div class="stat-strip">
+            <article class="stat-card">
+              <span class="stat-label">Water</span>
+              <strong id="stat-water">--</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Coffee</span>
+              <strong id="stat-coffee">--</strong>
+            </article>
+            <article class="stat-card">
+              <span class="stat-label">Ratio</span>
+              <strong id="stat-ratio">--</strong>
+            </article>
+          </div>
+
+          <section class="recipe-card">
+            <div class="recipe-heading">
+              <h3>Recipe Breakdown</h3>
+              <p>
+                Method-specific pours will show up here. Freestyle mode still
+                gives you the core brew math instantly.
+              </p>
+            </div>
+
+            <section
+              class="chart-card"
+              id="chart-card"
+              aria-labelledby="recipe-chart-title"
+              hidden
+            >
+              <div class="chart-header">
+                <h4 id="recipe-chart-title">Recipe Graph</h4>
+                <p>Cumulative water by pour</p>
+              </div>
+              <div class="chart-frame">
+                <canvas
+                  id="recipe-chart"
+                  width="640"
+                  height="320"
+                  aria-label="Recipe chart"
+                ></canvas>
+              </div>
+            </section>
+
+            <ol id="recipe-steps" class="recipe-steps">
+              <li>Add inputs to generate your first schedule.</li>
+            </ol>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

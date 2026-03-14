@@ -1,0 +1,356 @@
+:root {
+  --bg: #f5efe6;
+  --bg-accent: #e8d5bd;
+  --panel: rgba(255, 251, 245, 0.86);
+  --panel-strong: #fffaf3;
+  --text: #2d2017;
+  --muted: #6f5a4c;
+  --line: rgba(88, 57, 33, 0.12);
+  --accent: #9a5631;
+  --accent-dark: #734022;
+  --shadow: 0 24px 60px rgba(83, 50, 28, 0.14);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.8), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(154, 86, 49, 0.18), transparent 28%),
+    linear-gradient(135deg, var(--bg) 0%, #f1e4d2 52%, var(--bg-accent) 100%);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: auto;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  background: rgba(255, 248, 240, 0.38);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+body::before {
+  top: 5%;
+  right: -4rem;
+}
+
+body::after {
+  bottom: -5rem;
+  left: -3rem;
+}
+
+.page-shell {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+}
+
+.hero {
+  padding: 2rem 0 2.5rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--accent-dark);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+.hero h1,
+.panel-heading h2,
+.recipe-heading h3 {
+  font-family: "Fraunces", serif;
+}
+
+.hero h1 {
+  margin: 0;
+  max-width: 11ch;
+  font-size: clamp(2.8rem, 6vw, 5.4rem);
+  line-height: 0.94;
+}
+
+.hero-copy {
+  max-width: 42rem;
+  margin: 1.2rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.control-panel {
+  padding: 1.5rem;
+}
+
+.results-panel {
+  padding: 1.5rem;
+}
+
+.panel-heading h2,
+.recipe-heading h3 {
+  margin: 0;
+  font-size: 1.7rem;
+}
+
+.panel-heading p,
+.recipe-heading p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.brew-form {
+  margin-top: 1.5rem;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.9rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.field span {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--panel-strong);
+  transition: border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: rgba(154, 86, 49, 0.6);
+  box-shadow: 0 0 0 4px rgba(154, 86, 49, 0.12);
+  transform: translateY(-1px);
+}
+
+.method-controls {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 250, 243, 0.72);
+  border: 1px solid var(--line);
+}
+
+.method-controls .field-grid {
+  margin-top: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.general-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.action-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.2rem;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.9rem 1.2rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button-primary {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  color: white;
+  box-shadow: 0 14px 30px rgba(115, 64, 34, 0.24);
+}
+
+.button-secondary {
+  background: rgba(255, 250, 243, 0.95);
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin: 1.5rem 0;
+}
+
+.stat-card,
+.recipe-card {
+  background: rgba(255, 252, 247, 0.9);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.stat-card {
+  padding: 1rem;
+}
+
+.stat-label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.stat-card strong {
+  font-size: 1.45rem;
+}
+
+.recipe-card {
+  padding: 1.25rem;
+}
+
+.chart-card {
+  margin-top: 1.1rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(255, 249, 242, 0.88);
+}
+
+.chart-header h4 {
+  margin: 0;
+  font-family: "Fraunces", serif;
+  font-size: 1.15rem;
+}
+
+.chart-header p {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.chart-frame {
+  margin-top: 0.85rem;
+  width: 100%;
+  overflow: hidden;
+}
+
+.chart-frame canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.recipe-steps {
+  margin: 1.1rem 0 0;
+  padding-left: 1.2rem;
+  line-height: 1.75;
+}
+
+.recipe-steps li + li {
+  margin-top: 0.45rem;
+}
+
+.recipe-step-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.recipe-step-target {
+  font-weight: 700;
+}
+
+.recipe-step-pour {
+  color: var(--muted);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    max-width: 12ch;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    width: min(100% - 1rem, 100%);
+    padding-top: 1.5rem;
+  }
+
+  .hero {
+    padding-top: 1rem;
+  }
+
+  .field-grid,
+  .method-controls .field-grid,
+  .stat-strip,
+  .action-row {
+    grid-template-columns: 1fr;
+  }
+
+  .recipe-steps {
+    padding-left: 1rem;
+  }
+
+  .chart-card {
+    padding: 0.85rem;
+  }
+
+  .recipe-step-line {
+    align-items: center;
+    gap: 0.35rem 0.75rem;
+  }
+
+  .recipe-step-target {
+    font-size: 0.98rem;
+  }
+
+  .recipe-step-pour {
+    font-size: 0.88rem;
+  }
+}
