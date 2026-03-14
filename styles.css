@@ -12,6 +12,23 @@
   --radius-xl: 28px;
   --radius-lg: 20px;
   --radius-md: 14px;
+  --chart-axis: rgba(88, 57, 33, 0.18);
+  --chart-grid: rgba(88, 57, 33, 0.08);
+}
+
+body[data-theme="dark"] {
+  --bg: #0d0a08;
+  --bg-accent: #0d0a08;
+  --panel: rgba(24, 18, 15, 0.96);
+  --panel-strong: #1d1612;
+  --text: #f3e7db;
+  --muted: #bba796;
+  --line: rgba(243, 231, 219, 0.1);
+  --accent: #c98357;
+  --accent-dark: #a76741;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+  --chart-axis: rgba(243, 231, 219, 0.18);
+  --chart-grid: rgba(243, 231, 219, 0.06);
 }
 
 * {
@@ -23,33 +40,11 @@ body {
   min-height: 100vh;
   font-family: "Manrope", sans-serif;
   color: var(--text);
-  background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.8), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(154, 86, 49, 0.18), transparent 28%),
-    linear-gradient(135deg, var(--bg) 0%, #f1e4d2 52%, var(--bg-accent) 100%);
+  background: linear-gradient(135deg, var(--bg) 0%, #f1e4d2 52%, var(--bg-accent) 100%);
 }
 
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  inset: auto;
-  width: 18rem;
-  height: 18rem;
-  border-radius: 50%;
-  background: rgba(255, 248, 240, 0.38);
-  filter: blur(12px);
-  pointer-events: none;
-}
-
-body::before {
-  top: 5%;
-  right: -4rem;
-}
-
-body::after {
-  bottom: -5rem;
-  left: -3rem;
+body[data-theme="dark"] {
+  background: var(--bg);
 }
 
 .page-shell {
@@ -62,6 +57,13 @@ body::after {
   padding: 2rem 0 2.5rem;
 }
 
+.hero-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 .eyebrow {
   margin: 0 0 0.75rem;
   color: var(--accent-dark);
@@ -69,6 +71,14 @@ body::after {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-size: 0.75rem;
+}
+
+.theme-toggle {
+  border: 1px solid var(--line);
+  background: var(--panel-strong);
+  color: var(--text);
+  box-shadow: none;
+  padding: 0.65rem 1rem;
 }
 
 .hero h1,
@@ -177,6 +187,13 @@ body::after {
   border: 1px solid var(--line);
 }
 
+body[data-theme="dark"] .method-controls,
+body[data-theme="dark"] .stat-card,
+body[data-theme="dark"] .recipe-card,
+body[data-theme="dark"] .chart-card {
+  background: rgba(29, 22, 18, 0.96);
+}
+
 .method-controls .field-grid {
   margin-top: 0;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -211,6 +228,12 @@ button {
   background: rgba(255, 250, 243, 0.95);
   color: var(--text);
   border: 1px solid var(--line);
+}
+
+body[data-theme="dark"] .button-secondary {
+  background: var(--panel-strong);
+  color: var(--text);
+  border: 1px solid var(--text);
 }
 
 .stat-strip {
@@ -324,6 +347,11 @@ button {
 
   .hero {
     padding-top: 1rem;
+  }
+
+  .hero-topbar {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .field-grid,

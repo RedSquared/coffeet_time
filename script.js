@@ -18,6 +18,9 @@ const statRatio = document.querySelector("#stat-ratio");
 const recipeSteps = document.querySelector("#recipe-steps");
 const recipeChart = document.querySelector("#recipe-chart");
 const chartCard = document.querySelector("#chart-card");
+const themeToggle = document.querySelector("#theme-toggle");
+
+const themeStorageKey = "coffee-theme";
 
 const baseRecipeMessage =
   "Enter any two values to generate a starting recipe.";
@@ -75,10 +78,17 @@ function drawRecipeChart(steps) {
   const chartWidth = cssWidth - padding.left - padding.right;
   const chartHeight = cssHeight - padding.top - padding.bottom;
 
-  context.strokeStyle = "rgba(88, 57, 33, 0.18)";
+  const styles = getComputedStyle(document.body);
+  const mutedColor = styles.getPropertyValue("--muted").trim() || "#6f5a4c";
+  const textColor = styles.getPropertyValue("--text").trim() || "#2d2017";
+  const accentColor = styles.getPropertyValue("--accent").trim() || "#9a5631";
+  const axisColor = styles.getPropertyValue("--chart-axis").trim() || "rgba(88, 57, 33, 0.18)";
+  const gridColor = styles.getPropertyValue("--chart-grid").trim() || "rgba(88, 57, 33, 0.08)";
+
+  context.strokeStyle = axisColor;
   context.lineWidth = 1;
   context.font = "12px Manrope";
-  context.fillStyle = "#6f5a4c";
+  context.fillStyle = mutedColor;
 
   context.beginPath();
   context.moveTo(padding.left, padding.top);
@@ -98,13 +108,13 @@ function drawRecipeChart(steps) {
     const value = (maxTarget / yTickCount) * tick;
     const y = padding.top + chartHeight - (value / maxTarget) * chartHeight;
 
-    context.strokeStyle = "rgba(88, 57, 33, 0.08)";
+    context.strokeStyle = gridColor;
     context.beginPath();
     context.moveTo(padding.left, y);
     context.lineTo(padding.left + chartWidth, y);
     context.stroke();
 
-    context.fillStyle = "#6f5a4c";
+    context.fillStyle = mutedColor;
     context.textAlign = "right";
     context.fillText(`${roundToTenth(value).toFixed(0)}g`, padding.left - 10, y + 4);
   }
@@ -119,7 +129,7 @@ function drawRecipeChart(steps) {
     return { x, y, label: step.label, target: step.target, pour: step.pour };
   });
 
-  context.strokeStyle = "#9a5631";
+  context.strokeStyle = accentColor;
   context.lineWidth = 3;
   context.beginPath();
   points.forEach((point, index) => {
@@ -132,12 +142,12 @@ function drawRecipeChart(steps) {
   context.stroke();
 
   points.forEach((point, index) => {
-    context.fillStyle = "#9a5631";
+    context.fillStyle = accentColor;
     context.beginPath();
     context.arc(point.x, point.y, 4.5, 0, Math.PI * 2);
     context.fill();
 
-    context.fillStyle = "#2d2017";
+    context.fillStyle = textColor;
     context.textAlign = "center";
     context.fillText(`${index + 1}`, point.x, padding.top + chartHeight + 20);
   });
@@ -146,13 +156,28 @@ function drawRecipeChart(steps) {
   context.translate(20, padding.top + chartHeight / 2);
   context.rotate(-Math.PI / 2);
   context.textAlign = "center";
-  context.fillStyle = "#6f5a4c";
+  context.fillStyle = mutedColor;
   context.fillText("Water", 0, 0);
   context.restore();
 
   context.textAlign = "center";
-  context.fillStyle = "#6f5a4c";
+  context.fillStyle = mutedColor;
   context.fillText("Pours", padding.left + chartWidth / 2, cssHeight - 8);
+}
+
+function getSavedTheme() {
+  return window.localStorage.getItem(themeStorageKey) || "light";
+}
+
+function setTheme(theme) {
+  document.body.dataset.theme = theme;
+
+  if (themeToggle) {
+    themeToggle.textContent = theme === "dark" ? "Light mode" : "Dark mode";
+    themeToggle.setAttribute("aria-label", theme === "dark" ? "Switch to light mode" : "Switch to dark mode");
+  }
+
+  window.localStorage.setItem(themeStorageKey, theme);
 }
 
 function readNumber(input) {
@@ -397,7 +422,16 @@ resetButton.addEventListener("click", () => {
 });
 
 syncMethodControls();
+setTheme(getSavedTheme());
 resetResults();
+
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const nextTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    updateRecipe();
+  });
+}
 
 window.addEventListener("resize", () => {
   const activeMethod = brewMethod.value;
